@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
     List<Long> steps = Collections.synchronizedList(new ArrayList<>());
 
-    int calculateBpm() {
+    float calculateBpm() {
         List<Long> considered = steps.stream()
                 .filter(step -> step >= System.currentTimeMillis() - 2500)
                 .collect(Collectors.toList());
 
         if (considered.size() < 2) {
-            return musicBpm;
+            return musicBpm * 0.2f;
         }
 
         long total = 0;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                float speed = ((float)calculateBpm()) / musicBpm;
+                float speed = calculateBpm() / musicBpm;
                 speed = Math.max(0.2f, speed);
                 Log.i("FitHub", "speed ${speed}");
                 mediaPlayer.setPlaybackParams(mediaPlayer.getPlaybackParams().setSpeed(speed));
