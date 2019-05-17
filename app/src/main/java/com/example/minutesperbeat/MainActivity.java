@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import rx.Subscription;
 
@@ -38,10 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
     static int musicBpm = 149;
 
-    ArrayList<Float> steps = new ArrayList<>();
+    ArrayList<Long> steps = new ArrayList<>();
 
     int calculateBpm() {
-        return musicBpm;
+        List<Long> considered = steps.stream()
+                .filter(step -> step >= System.currentTimeMillis() - 10000)
+                .collect(Collectors.toList());
+
+        if (considered.size() < 2) {
+            return musicBpm;
+        }
+
+        long total = 0;
+        for (int i = 0;i < considered.size() - 1; ++i) {
+            long step = considered.get(i);
+            long next = considered.get(i + 1);
+            total += (next - step);
+        }
+        float avgDurationBetweenSteps = total / (float)(considered.size()-1);
+        avgDurationBetweenSteps *= 2; // two feet
+        int bpm = (int) (1.0f / avgDurationBetweenSteps);
+        return bpm;
     }
 
     private void initMds() {
