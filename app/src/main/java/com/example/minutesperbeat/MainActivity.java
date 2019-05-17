@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     int calculateBpm() {
         List<Long> considered = steps.stream()
-                .filter(step -> step >= System.currentTimeMillis() - 10000)
+                .filter(step -> step >= System.currentTimeMillis() - 2500)
                 .collect(Collectors.toList());
 
         if (considered.size() < 2) {
