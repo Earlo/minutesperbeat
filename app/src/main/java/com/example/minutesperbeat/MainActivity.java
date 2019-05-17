@@ -23,6 +23,8 @@ import com.polidea.rxandroidble.RxBleDevice;
 import com.polidea.rxandroidble.scan.ScanSettings;
 
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 import rx.Subscription;
@@ -37,12 +39,15 @@ public class MainActivity extends AppCompatActivity {
 
     static int musicBpm = 149;
 
-    List<Long> steps = Collections.synchronizedList(new ArrayList<>());
+    List<Long> steps = new ArrayList<>();
+    Lock stepsLock = new ReentrantLock();
 
     float calculateBpm() {
+        stepsLock.lock();
         List<Long> considered = steps.stream()
                 .filter(step -> step >= System.currentTimeMillis() - 2500)
                 .collect(Collectors.toList());
+        stepsLock.unlock();
 
         if (considered.size() < 2) {
             return musicBpm * 0.2f;
@@ -154,7 +159,9 @@ public class MainActivity extends AppCompatActivity {
                                                                         Math.abs(ar.x - previuz.x) + Math.abs(ar.y - previuz.y) + Math.abs(ar.z - previuz.z);
                                                                 if (totalChange > 30) {
                                                                     Log.i("memestepped", "xd " + totalChange);
+                                                                    stepsLock.lock();
                                                                     steps.add(System.currentTimeMillis());
+                                                                    stepsLock.unlock();
                                                                 }
                                                             }
                                                             previuz = ar;
