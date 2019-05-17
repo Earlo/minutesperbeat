@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         }, 500, 100);
     }
 
+    AccDataResponse.Array previuz;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatActivity memethis = this;
@@ -147,6 +149,15 @@ public class MainActivity extends AppCompatActivity {
                                                             String accStr =
                                                                     String.format("%.02f, %.02f, %.02f", ar.x, ar.y, ar.z);
                                                             Log.i("memes", accStr);
+
+                                                            if (previuz != null) {
+                                                                double totalChange =
+                                                                        (ar.x - previuz.x) + (ar.y - previuz.y) + (ar.z - previuz.z);
+                                                                if (totalChange > 30) {
+                                                                    steps.add(System.currentTimeMillis());
+                                                                }
+                                                            }
+                                                            previuz = ar;
                                                         }
                                                     }
 
