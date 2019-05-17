@@ -22,6 +22,7 @@ import com.polidea.rxandroidble.RxBleDevice;
 import com.polidea.rxandroidble.scan.ScanSettings;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
     // BleClient singleton
     static private RxBleClient mBleClient;
     static private MdsSubscription memesensor;
+
+    static int musicBpm = 149;
+
+    ArrayList<Float> steps = new ArrayList<>();
+
+    int calculateBpm() {
+        return musicBpm;
+    }
 
     private void initMds() {
         mMds = Mds.builder().build(this);
@@ -48,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                float speed = 0.2f + (float)(Math.sin(System.currentTimeMillis() * 0.0001) + 1);
+                float speed = ((float)calculateBpm()) / musicBpm;
+                speed = Math.max(0.2f, speed);
                 Log.i("FitHub", "speed ${speed}");
                 mediaPlayer.setPlaybackParams(mediaPlayer.getPlaybackParams().setSpeed(speed));
             }
