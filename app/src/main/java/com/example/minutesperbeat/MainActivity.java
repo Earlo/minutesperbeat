@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     private void playMusic() {
         Random rnd = new Random();
-        if(rnd.nextBoolean()){
+        if(rnd.nextBoolean() && rnd.nextBoolean()){
             mediaPlayer = MediaPlayer.create(this, R.raw.hasselhoff);
             musicBpm = 149;
         }
