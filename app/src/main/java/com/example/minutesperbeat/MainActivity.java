@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 float speed = calculateBpm() / musicBpm;
                 speed = Math.max(0.2f, speed);
-                Log.i("FitHub", speed);
+                 Log.i("FitHub", "speed " + speed);
                 mediaPlayer.setPlaybackParams(mediaPlayer.getPlaybackParams().setSpeed(speed));
             }
         }, 500, 100);
