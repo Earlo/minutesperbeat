@@ -35,11 +35,6 @@ public class MainActivity extends AppCompatActivity {
     static private RxBleClient mBleClient;
     static private MdsSubscription memesensor;
 
-    // UI
-    private ListView mScanResultListView;
-    private ArrayList<MyScanResult> mScanResArrayList = new ArrayList<>();
-    ArrayAdapter<MyScanResult> mScanResArrayAdapter;
-
     private void initMds() {
         mMds = Mds.builder().build(this);
     }
@@ -126,10 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onDisconnect(String bleAddress) {
-                                        for (MyScanResult sr : mScanResArrayList) {
-                                            if (bleAddress.equals(sr.macAddress))
-                                                sr.markDisconnected();
-                                        }
                                     }
                                 });
                                 }
