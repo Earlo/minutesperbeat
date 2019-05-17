@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             total += (next - step);
         }
         float avgDurationBetweenSteps = total / (float)(considered.size()-1);
-        avgDurationBetweenSteps *= 2; // two feet
+        avgDurationBetweenSteps /= 2; // two feet
         int bpm = (int) (1.0f / avgDurationBetweenSteps);
         return bpm;
     }
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
                                                                 double totalChange =
                                                                         (ar.x - previuz.x) + (ar.y - previuz.y) + (ar.z - previuz.z);
                                                                 if (totalChange > 30) {
+                                                                    Log.i("memestepped", "xd");
                                                                     steps.add(System.currentTimeMillis());
                                                                 }
                                                             }
