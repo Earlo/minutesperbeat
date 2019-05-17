@@ -2,6 +2,7 @@ package com.example.minutesperbeat;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,8 @@ import com.polidea.rxandroidble.RxBleDevice;
 import com.polidea.rxandroidble.scan.ScanSettings;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import rx.Subscription;
 
@@ -41,12 +44,29 @@ public class MainActivity extends AppCompatActivity {
         mMds = Mds.builder().build(this);
     }
 
+    MediaPlayer mediaPlayer;
+    private void playMusic() {
+        mediaPlayer = MediaPlayer.create(this, R.raw.hasselhoff);
+        mediaPlayer.start();
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                float speed = 0.2f + (float)(Math.sin(System.currentTimeMillis() * 0.0001) + 1);
+                Log.i("FitHub", "speed ${speed}");
+                mediaPlayer.setPlaybackParams(mediaPlayer.getPlaybackParams().setSpeed(speed));
+            }
+        }, 500, 100);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatActivity memethis = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initMds();
+        playMusic();
         getBleClient().scanBleDevices(
                 new ScanSettings.Builder()
                         // .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY) // change if needed
@@ -115,6 +135,13 @@ public class MainActivity extends AppCompatActivity {
                                 }
                         }
                 );
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
+        mediaPlayer.release();
     }
 
     private void showConnectionError(MdsException e) {
