@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     AccDataResponse.Array previuz;
+    double[] previousDelta = new double[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,14 +156,23 @@ public class MainActivity extends AppCompatActivity {
                                                             Log.i("memes", accStr);
 
                                                             if (previuz != null) {
-                                                                double totalChange =
-                                                                        (ar.x - previuz.x) + (ar.y - previuz.y) + (ar.z - previuz.z);
-                                                                if (totalChange > 30) {
-                                                                    Log.i("memestepped", "xd " + totalChange + " " + (ar.x - previuz.x) + "x" + (ar.y - previuz.y) + "x" + (ar.z - previuz.z));
+                                                                double xchange = ar.x - previuz.x;
+                                                                double ychange = ar.y - previuz.y;
+                                                                double zchange = ar.z - previuz.z;
+
+                                                                boolean enoughChange =
+                                                                        (Math.abs(xchange) > 10 && (xchange / previousDelta[0]) < -0.5) ||
+                                                                        (Math.abs(ychange) > 10 && (ychange / previousDelta[1]) < -0.5) ||
+                                                                        (Math.abs(zchange) > 10 && (zchange / previousDelta[2]) < -0.5);
+                                                                if (enoughChange) {
+                                                                    Log.i("memestepped", "xd " + xchange + " " + ychange + " " + zchange);
                                                                     stepsLock.lock();
                                                                     steps.add(System.currentTimeMillis());
                                                                     stepsLock.unlock();
                                                                 }
+                                                                previousDelta[0] = xchange;
+                                                                previousDelta[1] = ychange;
+                                                                previousDelta[2] = zchange;
                                                             }
                                                             previuz = ar;
                                                         }
