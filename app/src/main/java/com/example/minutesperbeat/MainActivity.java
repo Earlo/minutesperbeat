@@ -22,11 +22,7 @@ import com.polidea.rxandroidble.RxBleClient;
 import com.polidea.rxandroidble.RxBleDevice;
 import com.polidea.rxandroidble.scan.ScanSettings;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import rx.Subscription;
@@ -41,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     static int musicBpm = 149;
 
-    ArrayList<Long> steps = new ArrayList<>();
+    List<Long> steps = Collections.synchronizedList(new ArrayList<>());
 
     int calculateBpm() {
         List<Long> considered = steps.stream()
