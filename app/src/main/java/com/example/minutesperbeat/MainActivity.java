@@ -24,6 +24,7 @@ import com.polidea.rxandroidble.scan.ScanSettings;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.stream.Collectors;
@@ -69,7 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
     MediaPlayer mediaPlayer;
     private void playMusic() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.hasselhoff);
+        Random rnd = new Random();
+        if(rnd.nextBoolean()){
+            mediaPlayer = MediaPlayer.create(this, R.raw.hasselhoff);
+        }
+        else{
+            mediaPlayer = MediaPlayer.create(this, R.raw.tapio);
+        }
         mediaPlayer.start();
 
         Timer timer = new Timer();
