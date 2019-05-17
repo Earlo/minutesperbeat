@@ -156,9 +156,9 @@ public class MainActivity extends AppCompatActivity {
 
                                                             if (previuz != null) {
                                                                 double totalChange =
-                                                                        Math.abs(ar.x - previuz.x) + Math.abs(ar.y - previuz.y) + Math.abs(ar.z - previuz.z);
+                                                                        (ar.x - previuz.x) + (ar.y - previuz.y) + (ar.z - previuz.z);
                                                                 if (totalChange > 30) {
-                                                                    Log.i("memestepped", "xd " + totalChange);
+                                                                    Log.i("memestepped", "xd " + totalChange + " " + (ar.x - previuz.x) + "x" + (ar.y - previuz.y) + "x" + (ar.z - previuz.z));
                                                                     stepsLock.lock();
                                                                     steps.add(System.currentTimeMillis());
                                                                     stepsLock.unlock();
