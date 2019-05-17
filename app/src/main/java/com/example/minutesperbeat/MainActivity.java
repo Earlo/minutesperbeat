@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             total += (next - step);
         }
         float avgDurationBetweenSteps = total / (float)(considered.size()-1);
-        avgDurationBetweenSteps /= 2; // two feet
+        // avgDurationBetweenSteps /= 2; // two feet
         int bpm = (int) (1.0f / (avgDurationBetweenSteps / 1000f / 60f));
         Log.i("bpm", "bpm:" + bpm + " avgdura:" + avgDurationBetweenSteps);
         return bpm;
