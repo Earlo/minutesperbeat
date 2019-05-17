@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
 import com.movesense.mds.Mds;
 import com.movesense.mds.MdsConnectionListener;
 import com.movesense.mds.MdsException;
@@ -132,7 +133,14 @@ public class MainActivity extends AppCompatActivity {
                                                 strContract, new MdsNotificationListener() {
                                                     @Override
                                                     public void onNotification(String data) {
-                                                        Log.i("memes", data);
+                                                        AccDataResponse accResponse = new Gson().fromJson(data, AccDataResponse.class);
+                                                        if (accResponse != null && accResponse.body.array.length > 0) {
+
+                                                            AccDataResponse.Array ar = accResponse.body.array[0];
+                                                            String accStr =
+                                                                    String.format("%.02f, %.02f, %.02f", ar.x, ar.y, ar.z);
+                                                            Log.i("memes", accStr);
+                                                        }
                                                     }
 
                                                     @Override
