@@ -167,9 +167,9 @@ public class MainActivity extends AppCompatActivity {
                                                                 double zchange = ar.z - previuz.z;
 
                                                                 boolean enoughChange =
-                                                                        (Math.abs(xchange) > 10 && Math.signum(xchange) != Math.signum(previousDelta[0])) ||
-                                                                        (Math.abs(ychange) > 10 && Math.signum(ychange) != Math.signum(previousDelta[1])) ||
-                                                                        (Math.abs(zchange) > 10 && Math.signum(zchange) != Math.signum(previousDelta[2]));
+                                                                        (Math.abs(xchange) > 15 && Math.signum(xchange) != Math.signum(previousDelta[0])) ||
+                                                                        (Math.abs(ychange) > 15 && Math.signum(ychange) != Math.signum(previousDelta[1])) ||
+                                                                        (Math.abs(zchange) > 15 && Math.signum(zchange) != Math.signum(previousDelta[2]));
                                                                 if (enoughChange) {
                                                                     Log.i("memestepped", "xd " + xchange + " " + ychange + " " + zchange);
                                                                     stepsLock.lock();
