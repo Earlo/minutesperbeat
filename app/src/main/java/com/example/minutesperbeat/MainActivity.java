@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }, 500, 100);
     }
 
-    AccDataResponse.Array previuz;
+    GyroDataResponse.Array previuz;
     double[] previousDelta = new double[3];
 
     long lastStep;
@@ -155,10 +155,10 @@ public class MainActivity extends AppCompatActivity {
                                                 strContract, new MdsNotificationListener() {
                                                     @Override
                                                     public void onNotification(String data) {
-                                                        AccDataResponse accResponse = new Gson().fromJson(data, AccDataResponse.class);
+                                                        GyroDataResponse accResponse = new Gson().fromJson(data, GyroDataResponse.class);
                                                         if (accResponse != null && accResponse.body.array.length > 0) {
 
-                                                            AccDataResponse.Array ar = accResponse.body.array[0];
+                                                            GyroDataResponse.Array ar = accResponse.body.array[0];
                                                             String accStr =
                                                                     String.format("%.02f, %.02f, %.02f", ar.x, ar.y, ar.z);
                                                             Log.i("memes", accStr);
