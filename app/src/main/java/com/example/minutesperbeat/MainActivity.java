@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import com.google.gson.Gson;
 import com.movesense.mds.Mds;
 import com.movesense.mds.MdsConnectionListener;
@@ -93,7 +94,9 @@ public class MainActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                float speed = calculateBpm() / musicBpm;
+                float bpm = calculateBpm();
+                ((TextView)findViewById(R.id.bpm_display)).setText("bpm: " + bpm);
+                float speed = bpm / musicBpm;
                 speed = Math.min(5, Math.max(0.2f, speed));
                 Log.i("FitHub", "speed " + speed);
                 mediaPlayer.setPlaybackParams(mediaPlayer.getPlaybackParams().setSpeed(speed));
