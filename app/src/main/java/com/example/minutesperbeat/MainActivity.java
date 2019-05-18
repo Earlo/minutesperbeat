@@ -165,26 +165,17 @@ public class MainActivity extends AppCompatActivity {
 
                                                             if (previuz != null) {
                                                                 double timeSinceLast = System.currentTimeMillis() - lastStep;
-                                                                double minTime = 400;
+                                                                double minTime = 500;
                                                                 double treshold = 100.0 * (minTime / timeSinceLast);
-                                                                double xchange = ar.x - previuz.x;
-                                                                double ychange = ar.y - previuz.y;
-                                                                double zchange = ar.z - previuz.z;
+                                                                double dotProduct = ar.x*previuz.x + ar.y*previuz.y + ar.z+previuz.z;
 
-                                                                boolean enoughChange =
-                                                                        (Math.abs(xchange) > treshold && Math.signum(xchange) != Math.signum(previousDelta[0])) ||
-                                                                        (Math.abs(ychange) > treshold && Math.signum(ychange) != Math.signum(previousDelta[1])) ||
-                                                                        (Math.abs(zchange) > treshold && Math.signum(zchange) != Math.signum(previousDelta[2]));
-                                                                if (enoughChange && timeSinceLast > minTime) {
-                                                                    Log.i("memestepped", "xd " + xchange + " " + ychange + " " + zchange);
+                                                                if (dotProduct > treshold && timeSinceLast > minTime) {
+                                                                    Log.i("memestepped", "dot: " + dotProduct + "; tres: " + treshold);
                                                                     stepsLock.lock();
                                                                     steps.add(System.currentTimeMillis());
                                                                     stepsLock.unlock();
                                                                     lastStep = System.currentTimeMillis();
                                                                 }
-                                                                previousDelta[0] = xchange;
-                                                                previousDelta[1] = ychange;
-                                                                previousDelta[2] = zchange;
                                                             }
                                                             previuz = ar;
                                                         }
