@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     float calculateBpm() {
         stepsLock.lock();
         List<Long> considered = steps.stream()
-                .filter(step -> step >= System.currentTimeMillis() - 2500)
+                .filter(step -> step >= System.currentTimeMillis() - 5000)
                 .collect(Collectors.toList());
         stepsLock.unlock();
 
