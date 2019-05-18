@@ -53,16 +53,22 @@ public class MainActivity extends AppCompatActivity {
             return musicBpm * 0.2f;
         }
 
-        long total = 0;
+        List<Long> durations = new ArrayList<>();
         for (int i = 0;i < considered.size() - 1; ++i) {
             long step = considered.get(i);
             long next = considered.get(i + 1);
-            total += (next - step);
+            durations.add(next - step);
         }
-        float avgDurationBetweenSteps = total / (float)(considered.size()-1);
-        // avgDurationBetweenSteps /= 2; // two feet
-        int bpm = (int) (1.0f / (avgDurationBetweenSteps / 1000f / 60f));
-        Log.i("bpm", "bpm:" + bpm + " avgdura:" + avgDurationBetweenSteps);
+
+        Collections.sort(durations);
+        long median;
+        if (durations.size() % 2 == 0)
+            median = (durations.get(durations.size()/2) + durations.get(durations.size()/2 - 1))/2;
+        else
+            median =  durations.get(durations.size()/2);
+
+        int bpm = (int) (1.0 / (median / 1000.0 / 60.0));
+        Log.i("bpm", "bpm:" + bpm + " median:" + median);
         return bpm;
     }
 
