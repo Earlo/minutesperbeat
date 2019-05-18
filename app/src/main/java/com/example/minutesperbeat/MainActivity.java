@@ -168,9 +168,9 @@ public class MainActivity extends AppCompatActivity {
 
                                                             if (previuz != null) {
                                                                 double timeSinceLast = System.currentTimeMillis() - lastStep;
-                                                                double minTime = 500;
-                                                                double treshold = 100.0 * (minTime / timeSinceLast);
-                                                                double dotProduct = ar.x*previuz.x + ar.y*previuz.y + ar.z+previuz.z;
+                                                                double minTime = 400;
+                                                                double treshold = 150.0;
+                                                                double dotProduct = Math.sqrt(ar.x*previuz.x + ar.y*previuz.y + ar.z+previuz.z);
 
                                                                 if (dotProduct > treshold && timeSinceLast > minTime) {
                                                                     Log.i("memestepped", "dot: " + dotProduct + "; tres: " + treshold);
