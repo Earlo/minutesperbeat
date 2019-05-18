@@ -164,15 +164,18 @@ public class MainActivity extends AppCompatActivity {
                                                             Log.i("memes", accStr);
 
                                                             if (previuz != null) {
+                                                                double timeSinceLast = System.currentTimeMillis() - lastStep;
+                                                                double minTime = 400;
+                                                                double treshold = 100.0 * (minTime / timeSinceLast);
                                                                 double xchange = ar.x - previuz.x;
                                                                 double ychange = ar.y - previuz.y;
                                                                 double zchange = ar.z - previuz.z;
 
                                                                 boolean enoughChange =
-                                                                        (Math.abs(xchange) > 10 && Math.signum(xchange) != Math.signum(previousDelta[0])) ||
-                                                                        (Math.abs(ychange) > 10 && Math.signum(ychange) != Math.signum(previousDelta[1])) ||
-                                                                        (Math.abs(zchange) > 10 && Math.signum(zchange) != Math.signum(previousDelta[2]));
-                                                                if (enoughChange && (System.currentTimeMillis() - lastStep) > 500) {
+                                                                        (Math.abs(xchange) > treshold && Math.signum(xchange) != Math.signum(previousDelta[0])) ||
+                                                                        (Math.abs(ychange) > treshold && Math.signum(ychange) != Math.signum(previousDelta[1])) ||
+                                                                        (Math.abs(zchange) > treshold && Math.signum(zchange) != Math.signum(previousDelta[2]));
+                                                                if (enoughChange && timeSinceLast > minTime) {
                                                                     Log.i("memestepped", "xd " + xchange + " " + ychange + " " + zchange);
                                                                     stepsLock.lock();
                                                                     steps.add(System.currentTimeMillis());
