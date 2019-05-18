@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         else
             median =  durations.get(durations.size()/2);
 
-        int bpm = (int) (1.0 / (median / 1000.0 / 60.0));
+        int bpm = (int) (1.0 / (median / 1000.0 / 60.0 / 2));
         Log.i("bpm", "bpm:" + bpm + " median:" + median);
         return bpm;
     }
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                                         });
 
                                         StringBuilder sb = new StringBuilder();
-                                        String strContract = sb.append("{\"Uri\": \"").append(serial).append("/Meas/Acc/13").append("\"}").toString();
+                                        String strContract = sb.append("{\"Uri\": \"").append(serial).append("/Meas/Gyro/13").append("\"}").toString();
                                         memesensor = mMds.builder().build(memethis).subscribe("suunto://MDS/EventListener",
                                                 strContract, new MdsNotificationListener() {
                                                     @Override
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                                                                         (Math.abs(xchange) > 10 && Math.signum(xchange) != Math.signum(previousDelta[0])) ||
                                                                         (Math.abs(ychange) > 10 && Math.signum(ychange) != Math.signum(previousDelta[1])) ||
                                                                         (Math.abs(zchange) > 10 && Math.signum(zchange) != Math.signum(previousDelta[2]));
-                                                                if (enoughChange && (System.currentTimeMillis() - lastStep) > 200) {
+                                                                if (enoughChange && (System.currentTimeMillis() - lastStep) > 500) {
                                                                     Log.i("memestepped", "xd " + xchange + " " + ychange + " " + zchange);
                                                                     stepsLock.lock();
                                                                     steps.add(System.currentTimeMillis());
